@@ -661,6 +661,154 @@ void displayList()
 
 
 
+// j.getFirst(): returns the data in the head of the list (if the list is non-empty) and null otherwise.
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node {
+	int data;
+	struct Node* next;
+};
+
+void push(struct Node** head_ref, int new_data)
+{
+
+	struct Node* new_node
+		= (struct Node*)malloc(sizeof(struct Node));
+
+
+	new_node->data = new_data;
+
+
+	new_node->next = (*head_ref);
+
+	
+	(*head_ref) = new_node;
+}
+
+
+int getFirst(struct Node* head, int index)
+{
+
+	struct Node* current = head;
+
+
+	int count = 0;
+	while (current != NULL) {
+		if (count == index)
+			return (current->data);
+		count++;
+		current = current->next;
+	}
+
+
+	assert(0);
+}
+
+
+int main()
+{
+
+
+	struct Node* head = NULL;
+
+
+	push(&head, 15);
+	push(&head, 44);
+	push(&head, 15);
+	push(&head, 125);
+	push(&head, 14);
+
+
+	printf("Element at index 0 is %d", getFirst(head, 0));
+	getchar();
+}
+
+
+
+
+
+
+
+// k.getLast(): returns the data in the tail of the list (if the list is non-empty) and null otherwise.
+
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node {
+	int data;
+	struct Node* next;
+};
+
+void push(struct Node** head_ref, int new_data)
+{
+
+	struct Node* new_node
+		= (struct Node*)malloc(sizeof(struct Node));
+
+
+	new_node->data = new_data;
+
+
+	new_node->next = (*head_ref);
+
+	
+	(*head_ref) = new_node;
+}
+
+
+int getLast(struct Node* head, int index)
+{
+
+	struct Node* current = head;
+
+
+	int count = 0;
+	while (current != NULL) {
+		if (count == index)
+			return (current->data);
+		count++;
+		current = current->next;
+	}
+
+
+	assert(0);
+}
+
+
+int main()
+{
+
+
+	struct Node* head = NULL;
+
+
+	push(&head, 15);
+	push(&head, 44);
+	push(&head, 15);
+	push(&head, 125);
+	push(&head, 14);
+
+
+	printf("Element at index Last is: %d", getLast(head, 4));
+	getchar();
+}
+
+
+
+
+
+
+
+
+
+
 
 m.deleteFirst(): deletes the first element of the list. It returns true if a deletion was performed.
 
@@ -1011,134 +1159,90 @@ int main()
  
  
  
-4.How to make a linked list circular? Write the code. 
- 
- #include <stdio.h>
+
+4.How to make a linked list circular? Write the code.
+
+
+
+
+#include <stdio.h>
 #include <stdlib.h>
 
-
 struct node {
-    int data;
-    struct node * next;
-}*head;
+    int num;
+    struct node * nextptr;
+}*stnode;
+ 
 
-
-
-void createList(int n);
-void displayList();
-
+void ClListcreation(int n);
+void displayClList();
 
 int main()
 {
-    int n, data, choice=1;
+    int n;
+    stnode = NULL;
+	printf("\n\n Circular Linked List : Create and display a circular linked list :\n");
+	printf("-----------------------------------------------------------------------\n");	   	
 
-    head = NULL;
-
-   
-    while(choice != 0)
-    {
-        printf("============================================\n");
-        printf("CIRCULAR LINKED LIST PROGRAM\n");
-        printf("============================================\n");
-        printf("1. Create List\n");
-        printf("2. Display list\n");
-        printf("0. Exit\n");
-        printf("--------------------------------------------\n");
-        printf("Enter your choice : ");
-
-        scanf("%d", &choice);
-
-        switch(choice)
-        {
-            case 1:
-                printf("Enter the total number of nodes in list: ");
-                scanf("%d", &n);
-                createList(n);
-                break;
-            case 2:
-                displayList();
-                break;
-            case 0:
-                break;
-            default:
-                printf("Error! Invalid choice. Please choose between 0-2");
-        }
-
-        printf("\n\n\n\n\n");
-    }
-
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+ 
+    ClListcreation(n); 
+    displayClList();
     return 0;
 }
 
-
-
-void createList(int n)
+void ClListcreation(int n)
 {
-    int i, data;
-    struct node *prevNode, *newNode;
+    int i, num;
+    struct node *preptr, *newnode;
 
     if(n >= 1)
     {
-       
-        head = (struct node *)malloc(sizeof(struct node));
+        stnode = (struct node *)malloc(sizeof(struct node));
 
-        printf("Enter data of 1 node: ");
-        scanf("%d", &data);
-
-        head->data = data;
-        head->next = NULL;
-
-        prevNode = head;
-
-      
+        printf(" Input data for node 1 : ");
+        scanf("%d", &num);
+        stnode->num = num;
+        stnode->nextptr = NULL;
+        preptr = stnode;
         for(i=2; i<=n; i++)
         {
-            newNode = (struct node *)malloc(sizeof(struct node));
-
-            printf("Enter data of %d node: ", i);
-            scanf("%d", &data);
-
-            newNode->data = data;
-            newNode->next = NULL;
-
-            
-            prevNode->next = newNode;
-
-            
-            prevNode = newNode;
+            newnode = (struct node *)malloc(sizeof(struct node));
+            printf(" Input data for node %d : ", i);
+            scanf("%d", &num);
+            newnode->num = num;
+            newnode->nextptr = NULL;	
+            preptr->nextptr = newnode;	
+            preptr = newnode;   	
         }
-
-        
-        prevNode->next = head;
-
-        printf("\nCIRCULAR LINKED LIST CREATED SUCCESSFULLY\n");
+        preptr->nextptr = stnode; 		
     }
 }
 
-
-
-void displayList()
+void displayClList()
 {
-    struct node *current;
+    struct node *tmp;
     int n = 1;
 
-    if(head == NULL)
+    if(stnode == NULL)
     {
-        printf("List is empty.\n");
+        printf(" No data found in the List yet.");
     }
     else
     {
-        current = head;
-        printf("DATA IN THE LIST:\n");
+        tmp = stnode;
+        printf("\n\n Data entered in the list are :\n");
 
         do {
-            printf("Data %d = %d\n", n, current->data);
+            printf(" Data %d = %d\n", n, tmp->num);
 
-            current = current->next;
+            tmp = tmp->nextptr;
             n++;
-        }while(current != head);
+        }while(tmp != stnode);
     }
 }
+
  
     
 
