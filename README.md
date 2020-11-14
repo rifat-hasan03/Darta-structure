@@ -353,58 +353,424 @@ int main(){
  
  
  
- //g.insertFirst(int data) inserts data before the first element in the list (if the list is non-empty) or simply adds data to the list (if the list is empty). 
+ //g.insertFirst(int data) inserts data before the first
+element in the list (if the list is non-empty) or simply adds
+data to the list (if the list is empty).
 
- 
- 
- 
- #include <stdio.h>
-
+#include <stdio.h>
 #include<stdlib.h>
-
 struct Node{
+int data;
+struct Node *next;};
+struct Node *head;
+void Insert(int x){
+struct Node* temp=( struct Node*)malloc(sizeof(struct
+Node));
+temp->data=x;
+temp->next=head;
+head=temp;
+}
+void print(){
+struct Node *temp;
+temp= head;
+printf(" printing :");while(temp!=NULL){
+printf("%d\n",temp->data);
+temp=temp->next;
+}
+printf("\n");
+}
+int main(){
+head = NULL;
+printf("HOW many NUmber?\n");
+int n,i,x;
+scanf("%d",&n);
+for(i=0;i<n;i++){
+printf("Enter the NUmber\n");
+scanf("%d",&x);
+Insert(x);
+print();
+}}
+h.insertLast(data) inserts data after the last element in
+the list (if the list is non-empty) or simply adds data to
+the list.
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+int data;
+struct node *next;
+}*head;void createList(int n);
+void insertNodeAtEnd(int data);
+void displayList();
+int main()
+{
+int n, data;
+printf("Enter the total number of nodes: ");
+scanf("%d", &n);
+createList(n);
+printf("\nData in the list \n");
+displayList();printf("\nEnter data to insert at end of the list: ");
+scanf("%d", &data);
+insertNodeAtEnd(data);
+printf("\nData in the list \n");
+displayList();
+return 0;
+}
+void createList(int n)
+{
+struct node *newNode, *temp;
+int data, i;
+head = (struct node *)malloc(sizeof(struct node));if(head == NULL)
+{
+printf("Unable to allocate memory.");
+}
+else
+{
+printf("Enter the data of node 1: ");
+scanf("%d", &data);
+head->data = data; // Link the data field with data
+head->next = NULL; // Link the address field to NULL
+temp = head;
+for(i=2; i<=n; i++)
+{newNode = (struct node *)malloc(sizeof(struct
+node));
+if(newNode == NULL)
+{
+printf("Unable to allocate memory.");
+break;
+}
+else
+{
+printf("Enter the data of node %d: ", i);
+scanf("%d", &data);
+newNode->data = data;
+newNode->next = NULL;
+temp->next = newNode;
+temp = temp->next;}
+}
+printf("SINGLY LINKED LIST CREATED
+SUCCESSFULLY\n");
+}
+}
+void insertNodeAtEnd(int data)
+{
+struct node *newNode, *temp;
+newNode = (struct node*)malloc(sizeof(struct node));
+if(newNode == NULL)
+{
+printf("Unable to allocate memory.");}
+else
+{
+newNode->data = data;
+newNode->next = NULL;
+temp = head;
+while(temp != NULL && temp->next != NULL)
+temp = temp->next;
+temp->next = newNode;
+printf("DATA INSERTED SUCCESSFULLY\n");
+}
+}void displayList()
+{
+struct node *temp;
+if(head == NULL)
+{
+printf("List is empty.");
+}
+else
+{
+temp = head;
+while(temp != NULL)
+{
+printf("Data = %d\n", temp->data);
+temp = temp->next;
+}
+}
+}
+ 
+ 
+
+
+m.deleteFirst(): deletes the first element of the list. It returns true if a deletion was performed.
+
+#include <stdio.h>
+#include<stdlib.h>
+void printList(); 
+struct node{
     int data;
-    struct Node *next;
+    struct node *next ;
 };
 
-struct Node *head;
-
-void Insert(int x){
-    struct Node* temp=( struct Node*)malloc(sizeof(struct Node));
-    temp->data=x;
-    temp->next=head;
-    head=temp;
-}
-
-
-
-
-void print(){
-    struct Node *temp;
-    temp= head;
-     printf(" printing :");
-    while(temp!=NULL){
-        printf("%d\n",temp->data);
-        temp=temp->next;
-    }
-     printf("\n");
-
-}
+struct node *head;
 
 int main(){
-    head = NULL;
-    printf("HOW many NUmber?\n");
-    int n,i,x;
-    scanf("%d",&n);
-    for(i=0;i<n;i++){
-        printf("Enter the NUmber\n");
-        scanf("%d",&x);
-        Insert(x);
-        print();
+  head = (struct node*)malloc(sizeof(struct node));
+ struct node  * first = (struct node*)malloc(sizeof(struct node));
+ struct node   *second = (struct node*)malloc(sizeof(struct node));
+ struct node   *third = (struct node*)malloc(sizeof(struct node));
+ struct node   *fourth = (struct node*)malloc(sizeof(struct node));
+
+    head ->data = 8;
+    head->next = first;
+    first->data= 2;
+    first->next= second;
+    second->data= 4;
+    second->next= third;
+
+    third->data = 3;
+    third->next = fourth;
+    fourth->data = 7;
+    fourth->next = NULL;
+    printList();
+
+
+
+
+
+    struct node  *temp=head;
+    head=head->next;
+    free(temp);
+    printList();
+    return 0;
+}
+
+
+
+    void printList (){
+
+        printf("\n\n printing List delete(8):");
+        printf("\n\n printing List:");
+        struct node *temp= head;
+
+        while(temp!=NULL){
+            printf("%d,",temp->data);
+            temp=temp->next;
+        }
+        printf("\n\n\n\n\n");
+    }
+
+
+
+
+
+
+
+
+//n .deleteLast(): deletes the last element of the list. It returns true if a deletion was performed.
+
+
+#include <stdio.h>
+#include <stdlib.h>
+ 
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+ 
+
+void push(struct Node** head_ref, int data)
+{
+   
+    struct Node* ptr1 = (struct Node*)malloc(sizeof(struct Node));
+    ptr1->data = data;
+    ptr1->next = *head_ref;
+ 
+    
+    if (*head_ref != NULL) {
+       
+        struct Node* temp = *head_ref;
+        while (temp->next != *head_ref)
+            temp = temp->next;
+        temp->next = ptr1;
+    }
+    else
+        ptr1->next = ptr1;
+ 
+    *head_ref = ptr1;
+}
+ 
+
+void printList(struct Node* head)
+{
+    struct Node* temp = head;
+    if (head != NULL) {
+        do {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        } while (temp != head);
+    }
+ 
+    printf("\n");
+}
+ 
+
+void deleteNode(struct Node* head, int key)
+{
+    if (head == NULL)
+        return;
+ 
+   
+    struct Node *curr = head, *prev;
+    while (curr->data != key) 
+    {
+        if (curr->next == head)
+        {
+            printf("\nGiven node is not found"
+                   " in the list!!!");
+            break;
+        }
+ 
+        prev = curr;
+        curr = curr->next;
+    }
+ 
+    
+    if (curr->next == head) 
+    {
+        head = NULL;
+        free(curr);
+        return;
+    }
+ 
+   
+    if (curr == head) 
+    {
+        prev = head;
+        while (prev->next != head)
+            prev = prev->next;
+        head = curr->next;
+        prev->next = head;
+        free(curr);
+    }
+ 
+  
+    else if (curr->next == head && curr == head) 
+    {
+        prev->next = head;
+        free(curr);
+    }
+    else
+    {
+        prev->next = curr->next;
+        free(curr);
     }
 }
  
+
+int main()
+{
+   
+    struct Node* head = NULL;
  
+    
+    push(&head, 5);
+    push(&head, 6);
+    push(&head, 7);
+    push(&head, 8);
+    push(&head, 10);
+ 
+    printf("List Before Deletion: ");
+    printList(head);
+ 
+    deleteNode(head, 5);
+ 
+    printf("List After Deletion: ");
+    printList(head);
+ 
+    return 0;
+}
+
+
+
+o.deleteAt(int pos): deletes element at position pos in the list (the head is at position 0) if pos is within the bounds of the list. It returns true if a deletion was performed.
+
+
+
+
+#include <stdio.h> 
+#include <stdlib.h> 
+  
+struct Node 
+{ 
+    int data; 
+    struct Node *next; 
+}; 
+  
+
+void push(struct Node** head_ref, int new_data) 
+{ 
+    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node)); 
+    new_node->data  = new_data; 
+    new_node->next = (*head_ref); 
+    (*head_ref)    = new_node; 
+} 
+  
+
+void deleteNode(struct Node **head_ref, int position) 
+{ 
+  
+   if (*head_ref == NULL) 
+      return; 
+  struct Node* temp = *head_ref; 
+  
+    if (position == 0) 
+    { 
+        *head_ref = temp->next;   
+        free(temp);               
+        return; 
+    } 
+  
+    for (int i=0; temp!=NULL && i<position-1; i++) 
+         temp = temp->next; 
+  
+    if (temp == NULL || temp->next == NULL) 
+         return; 
+  
+    
+    struct Node *next = temp->next->next; 
+    free(temp->next);  
+    temp->next = next;  
+} 
+  
+
+void printList(struct Node *node) 
+{ 
+    while (node != NULL) 
+    { 
+        printf(" %d ", node->data); 
+        node = node->next; 
+    } 
+} 
+  
+
+int main() 
+{ 
+   
+    struct Node* head = NULL; 
+  
+    push(&head, 2); 
+    push(&head, 6); 
+    push(&head, 5); 
+    push(&head, 8); 
+    push(&head, 10); 
+  
+    puts("Created Linked List: "); 
+    printList(head); 
+    deleteNode(&head, 0); 
+    puts("\nLinked List after Deletion at position 0: "); 
+    printList(head); 
+    return 0; 
+}
+
+
+
+
+
+
+
+
+
+
 
  
  3.Write a function which reverses the list. Print the reversed list.
